@@ -11,12 +11,6 @@ module.exports = function (grunt) {
   require('time-grunt')(grunt);
 
   grunt.initConfig({
-    karma: {
-      unit: {
-        configFile: 'karma.conf.js',
-        singleRun: true
-      }
-    },
     uglify: {
       all: {
         options: {
@@ -29,11 +23,8 @@ module.exports = function (grunt) {
     }
   });
 
-  grunt.registerTask('test', ['karma']);
-
   grunt.registerTask('build', [
-    'uglify',
-    'test'
+    'uglify'
   ]);
 
   grunt.registerTask('default', ['build']);
