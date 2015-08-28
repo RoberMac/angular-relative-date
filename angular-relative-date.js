@@ -48,7 +48,7 @@
       return function(date) {
         var day, delta, hour, minute, month, now, translate, week, year;
         now = _now ? _now : new Date();
-        if (!(date instanceof Date)) {
+        if (!new Date(date)) {
           date = new Date(date);
         }
         delta = null;
