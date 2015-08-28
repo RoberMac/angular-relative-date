@@ -77,7 +77,7 @@
           });
         };
         switch (false) {
-          case !(delta < 30):
+          case !(delta < 7):
             return translate('just_now');
           case !(delta < minute):
             return translate('seconds', delta);
