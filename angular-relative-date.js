@@ -48,7 +48,7 @@
       return function(date) {
         var day, delta, hour, minute, month, now, translate, week, year;
         now = _now ? _now : new Date();
-        if (!new Date(date)) {
+        if (!(date instanceof Date)) {
           date = new Date(date);
         }
         delta = null;
@@ -111,15 +111,16 @@
   ]).directive('relativeDate', ['$timeout', '$filter', function ($timeout, $filter){
 
     return function (scope, elem, attrs){
-        var time  = attrs.relativeDate,
+        var time  = parseInt(attrs.relativeDate, 10),
             delay = 1000,
-            timeoutPromise;
+            timeoutPromise,
+            isLocal = false;
 
         function updateTime(){
             elem.text($filter('relativeDate')(time))
 
             // 降低刷新速率
-            if (delay < 60000 && new Date() - Date.parse(time) > 60000){
+            if (delay < 60000 && Date.now() - time > 60000){
                 delay = 60000
             }
         }
@@ -133,6 +134,15 @@
 
         elem.bind('$destroy', function() {
             $timeout.cancel(timeoutPromise);
+        })
+
+        elem.bind('click', function (){
+            if (isLocal){
+                updateTime()
+            } else {
+                elem.text(new Date(time).toLocaleString())
+            }
+            isLocal = !isLocal
         })
 
         updateTime()
